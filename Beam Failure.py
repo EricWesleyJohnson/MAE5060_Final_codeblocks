@@ -1,6 +1,10 @@
 '''
-Toggle comment ("Ctrl+/" if you're using Pycharm or a few other python IDEs) on lines 43 - 48 to run the different
-lay-ups.  Results needed will print in the console, I believe that's all you should need. Hopefully it's pretty clear.
+There are a bunch of print statements, that print out basically everything from Q through the R for Tsai-Wu and the
+critical loads, shear, and moment. Those last ones are summarized at the end so they're easy to find.  I prettied them
+up a bit to make them clear and easy to read.  The rest of the stuff is separated by whether it's for the flange or the
+web and those sections have big blue heading to help find where they start.  Hope this helps!
+
+DIFFERENT MATERIAL PROPERTIES ARE COMMENTED OUT AND COLLAPSED ON LINE 218
 '''
 
 import math
@@ -313,20 +317,14 @@ def main():
     stress_resultant = np.array([[100], [100], [0], [1], [1], [0]])
 
     # Enter a desired ply orientation angles in degrees here:
-    # angle_in_degrees_f = [0,0,45,0,0,0,0,-45,0,0,0,0,-45,0,0,0,0,45,0,0]
-    # angle_in_degrees_w = [0,0,45,-45,45,-45,0,0,45,-45,45,-45,0,0,45,-45,45,-45,0,0]
     angle_in_degrees_f = [45,90,-45,45,-45,0,0,0,0,-45,45,-45,90,45]  # flange
     angle_in_degrees_w = [45,90,-45,45,-45,45,-45,-45,45,-45,45,-45,90,45]  # web
 
     H = 2
     W = 2
-    # H = 4
-    # W = 3
     E_R = 10*(10**6)
     V = 100    # lb
     M = 8 * V  # in-lb
-    # V = 5000     # lb
-    # M = 50000    # in-lb
 
     N = len(angle_in_degrees_f)  # total number of plies
     t_ply = 0.005 # ply thickness in inches
@@ -405,8 +403,8 @@ def main():
 
     Vfc = R_TW_min_f * V
     Mfc = R_TW_min_f * M
-    Vwc = R_TW_min_f * V
-    Mwc = R_TW_min_f * M
+    Vwc = R_TW_min_w * V
+    Mwc = R_TW_min_w * M
 
     print('\n\n' + format('\033[1m\033[94mRESULTS FOR FLANGE','^200s'))
     for i in range(2):
@@ -431,15 +429,15 @@ def main():
 
     new_section()
     for i in range(N):
-        print('Global Stresses for layer {}=\n{}\n'.format(i, global_stresses_f[i]))
+        print('Global Stresses for layer {}:\n{}\n'.format(i+1, global_stresses_f[i]))
 
     new_section()
     for i in range(N):
-        print('Local Strains for layer {}=\n{}\n'.format(i, local_strains_f[i]))
+        print('Local Strains for layer {}:\n{}\n'.format(+1, local_strains_f[i]))
 
     new_section()
     for i in range(N):
-        print('Local Stresses for layer {}=\n{}\n'.format(i, local_stresses_f[i]))
+        print('Local Stresses for layer {}:\n{}\n'.format(i+1, local_stresses_f[i]))
 
     new_section()
     print('These are the Tsai-Wu Coefficients')
@@ -485,22 +483,22 @@ def main():
     print('\n[A] =\n{}'.format(A_array_w))
 
     new_section()
-    print('\nMidplane strains =\n{}\n'.format(midplane_strains_w))
+    print('\nMidplane strains :\n{}\n'.format(midplane_strains_w))
 
     new_section()
     print('Global Strains for ALL layers is:\n{}\n'.format(midplane_strains_w))
 
     new_section()
     for i in range(N):
-        print('Global Stresses for layer {}=\n{}\n'.format(i, global_stresses_w[i]))
+        print('Global Stresses for layer {}:\n{}\n'.format(i+1, global_stresses_w[i]))
 
     new_section()
     for i in range(N):
-        print('Local Strains for layer {}=\n{}\n'.format(i, local_strains_w[i]))
+        print('Local Strains for layer {}:\n{}\n'.format(i+1, local_strains_w[i]))
 
     new_section()
     for i in range(N):
-        print('Local Stresses for layer {}=\n{}\n'.format(i, local_stresses_w[i]))
+        print('Local Stresses for layer {}:\n{}\n'.format(i+1, local_stresses_w[i]))
 
     new_section()
     print('These are the Tsai-Wu Coefficients')
@@ -531,20 +529,21 @@ def main():
         for j in range(200):
             print('_', end='')
     print('\033[0m')
-    new_section()
-    print('The minimum strength ratio for this iteration \033[1m\033[94mIN THE FLANGES\033[0m is:\n\n\033[91mR_TW_min = {0:.{1}f},  This happens in \033[4mLayer {2}\033[0m'.format(R_TW_min_f, 2, R_TW_f.index(min(R_TW_f))+1))
 
     new_section()
-    print('Critical Loads, Shear, and Moment \033[1m\033[94mIN THE FLANGES\033[0m are:\n')
+    print('The minimum strength ratio for this iteration \033[1m\033[94mIN THE FLANGES\033[0m is:\n\033[91mR_TW_min = {0:.{1}f},  This happens in \033[4mLayer {2}\033[0m'.format(R_TW_min_f, 2, R_TW_f.index(min(R_TW_f))+1))
+
+    new_section()
+    print('Critical Loads, Shear, and Moment \033[1m\033[94mIN THE FLANGES\033[0m are:')
     print('\033[91mNxx_c = {0:.{4}f}   |   Nxy_c = {1:.{4}f}\n  V_c = {2:.{4}f}   |     M_c = {3:.{4}f}\033[0m'.format(Nxxfc, Nxyfc, Vfc, Mfc, 2))
 
     print()
     new_section()
-    print('The minimum strength ratio for this iteration \033[1m\033[94mIN THE WEB\033[0m is:\n\n\033[91mR_TW_min = {0:.{1}f},  This happens in \033[4mLayer {2}\033[0m'.format(R_TW_min_w, 2, R_TW_w.index(min(R_TW_w))+1))
+    print('The minimum strength ratio for this iteration \033[1m\033[94mIN THE WEB\033[0m is:\n\033[91mR_TW_min = {0:.{1}f},  This happens in \033[4mLayer {2}\033[0m'.format(R_TW_min_w, 2, R_TW_w.index(min(R_TW_w))+1))
 
     new_section()
-    print('Critical Loads, Shear, and Moment \033[1m\033[94mIN THE WEB\033[0m are:\n')
-    print('\033[91mNxx_c = {0:.{4}f}   |   Nxy_c = {1:.{4}f}\n  V_c = {2:.{4}f}   |     M_c = {3:.{4}f}\033[0m'.format(Nxxfc, Nxyfc, Vfc, Mfc, 2))
+    print('Critical Loads, Shear, and Moment \033[1m\033[94mIN THE WEB\033[0m are:')
+    print('\033[91mNxx_c = {0:.{4}f}   |   Nxy_c = {1:.{4}f}\n  V_c = {2:.{4}f}   |     M_c = {3:.{4}f}\033[0m'.format(Nxxwc, Nxywc, Vwc, Mwc, 2))
 
 
 if __name__ == '__main__':

@@ -1,6 +1,9 @@
 '''
-Toggle comment ("Ctrl+/" if you're using Pycharm or a few other python IDEs) on lines 43 - 48 to run the different
-lay-ups.  Results needed will print in the console, I believe that's all you should need. Hopefully it's pretty clear.
+There are a bunch of print statements, that print out basically everything from Q through the Rs for Max Stress and
+Tsai-Wu and the critical loads. Those last two are summarized at the end so they're easy to find.  I prettied them up a
+bit to make them clear and easy to read. Hope this helps!
+
+DIFFERENT MATERIAL PROPERTIES ARE COMMENTED OUT AND COLLAPSED ON LINE 217
 '''
 
 import math
@@ -426,16 +429,9 @@ def main():
 
     print()
     new_section()
-    print('The minimum strength ratio for this iteration is:\nR_MS_min = {0:.{1}f},  This happens in Layer {2}'.format(R_MS_min, 2, R_MS.index(min(R_MS))+1))
-
-    new_section()
-    print('The Critical Loads under MAX STRESS Failure are:')
-    print('Nxxc = {0:.{3}e}   |   Nyyc = {1:.{3}e}   |   Nxyc = {2:.{3}e}'.format(Nxxc_MS, Nyyc_MS, Nxyc_MS, 2))
-    print('Mxxc = {0:.{3}e}   |   Myyc = {1:.{3}e}   |   Mxyc = {2:.{3}e}'.format(Mxxc_MS, Myyc_MS, Mxyc_MS, 2))
-
-    new_section()
-    print('These are the Tsai-Wu Coefficients')
+    print('These are used to find the Tsai-Wu Coefficients')
     print('F11 = {0:.{6}e}   |   F22 = {1:.{6}e}   |   F12 = {2:.{6}e}\nF66 = {3:.{6}e}   |   F1  = {4:.{6}e}   |   F2  = {5:.{6}e}\n'.format(F11, F22, F12, F66, F1, F2, 2))
+    print('These are the Tsai-Wu Coefficients')
     for i in range(N):
         if i < 9:
             print('Layer {5}{4}:     a = {0:.{3}e}   |   b = {1:.{3}e}   |   cc = {2}'.format(a[i],b[i],cc[i], 2, i+1, 0))
@@ -457,12 +453,28 @@ def main():
                 print('Layer {0}{1}: R = {2:.{3}f}   |   '.format(0, i + 1, R_TW[i], 2), end='')
 
     print()
-    new_section()
-    print('The minimum strength ratio for this iteration is:\nR_TW_min = {0:.{1}f},  This happens in Layer {2}'.format(R_TW_min, 2, R_TW.index(min(R_TW))+1))
+
+    print('\n\n' + format('\033[1m\033[94mSUMMARY OF R VALUES AND CRIT LOADS FOR MAX STRESS THEN TSAI-WU\033[0M', '^200s'))
+    for i in range(2):
+        print()
+        for j in range(200):
+            print('_', end='')
+    print('\033[0m')
+
+    print()
+    print('The minimum strength ratio (\033[1m\033[94mMAX STRESS\033[0m) for this iteration is:\n\033[91mR_MS_min = {0:.{1}f},  This happens in Layer {2}\033[0m'.format(R_MS_min, 2, R_MS.index(min(R_MS))+1))
 
     new_section()
-    print('The Critical Loads under TSAI-WU Failure are:')
-    print('Nxxc = {0:.{3}e}   |   Nyyc = {1:.{3}e}   |   Nxyc = {2:.{3}e}'.format(Nxxc_TW, Nyyc_TW, Nxyc_TW, 2))
+    print('The Critical Loads under \033[1m\033[94mMAX STRESS\033[0m Failure are:')
+    print('\033[91mNxxc = {0:.{3}e}   |   Nyyc = {1:.{3}e}   |   Nxyc = {2:.{3}e}'.format(Nxxc_MS, Nyyc_MS, Nxyc_MS, 2))
+    print('Mxxc = {0:.{3}e}   |   Myyc = {1:.{3}e}   |   Mxyc = {2:.{3}e}\033[0m'.format(Mxxc_MS, Myyc_MS, Mxyc_MS, 2))
+
+    new_section()
+    print('The minimum strength ratio (\033[1m\033[94mTSAI-WU\033[0m) for this iteration is:\n\033[91mR_TW_min = {0:.{1}f},  This happens in \033[4mLayer {2}\033[0m'.format(R_TW_min, 2, R_TW.index(min(R_TW))+1))
+
+    new_section()
+    print('The Critical Loads under \033[1m\033[94mTSAI-WU\033[0m Failure are:')
+    print('\033[91mNxxc = {0:.{3}e}   |   Nyyc = {1:.{3}e}   |   Nxyc = {2:.{3}e}'.format(Nxxc_TW, Nyyc_TW, Nxyc_TW, 2))
     print('Mxxc = {0:.{3}e}   |   Myyc = {1:.{3}e}   |   Mxyc = {2:.{3}e}'.format(Mxxc_TW, Myyc_TW, Mxyc_TW, 2))
 
 
