@@ -4,7 +4,7 @@ critical loads, shear, and moment. Those last ones are summarized at the end so 
 up a bit to make them clear and easy to read.  The rest of the stuff is separated by whether it's for the flange or the
 web and those sections have big blue heading to help find where they start.  Hope this helps!
 
-DIFFERENT MATERIAL PROPERTIES ARE COMMENTED OUT AND COLLAPSED ON LINE 218
+DIFFERENT MATERIAL PROPERTIES ARE COMMENTED OUT LINE 218
 '''
 
 import math

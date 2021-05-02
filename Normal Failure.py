@@ -3,7 +3,7 @@ There are a bunch of print statements, that print out basically everything from 
 Tsai-Wu and the critical loads. Those last two are summarized at the end so they're easy to find.  I prettied them up a
 bit to make them clear and easy to read. Hope this helps!
 
-DIFFERENT MATERIAL PROPERTIES ARE COMMENTED OUT AND COLLAPSED ON LINE 217
+DIFFERENT MATERIAL PROPERTIES ARE COMMENTED OUT ON LINE 217
 '''
 
 import math
